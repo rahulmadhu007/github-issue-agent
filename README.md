@@ -22,7 +22,7 @@ The objective of this project is to build an Agentic AI system that:
 
 ## Current Development Status
 
-**Status: Stage 0 — Repository Foundation**
+**Status: Stage 1A — Minimum Working GitHub Issue Collector**
 
 > [!NOTE]
-> Functionality has not yet been implemented. This repository is currently in the initial scaffolding phase.
+> Stage 1A establishes the standalone GitHub issue collector to retrieve, normalize, and store up to 100 historical issues. Downstream RAG and agentic analysis workflows remain to be implemented in subsequent stages.

@@ -1,5 +1,8 @@
 # Target GitHub repository to synchronize and evaluate against
-repository: "owner/repo"  # Default placeholder: replace with target repo (e.g. "octocat/Hello-World")
+repository: "microsoft/vscode"
+
+# Maximum number of issues to collect (development limit)
+max_issues: 100
 
 # LLM model settings (local Ollama or compatible provider)
 llm_model: "qwen3:8b"  # Default placeholder: local model tag

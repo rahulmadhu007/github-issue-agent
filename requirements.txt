@@ -1,2 +1,6 @@
 # Intelligent GitHub Issue Refinement & Duplicate Detection System
-# Dependencies will be added incrementally as features are implemented and justified.
+# Dependencies added incrementally as features are implemented and justified.
+
+requests>=2.31.0
+pyyaml>=6.0
+pytest>=8.0.0
