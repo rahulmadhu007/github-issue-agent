@@ -22,7 +22,46 @@ The objective of this project is to build an Agentic AI system that:
 
 ## Current Development Status
 
-**Status: Stage 1A — Minimum Working GitHub Issue Collector**
+**Status: Stage 1B — Incremental GitHub Issue Synchronization**
 
-> [!NOTE]
-> Stage 1A establishes the standalone GitHub issue collector to retrieve, normalize, and store up to 100 historical issues. Downstream RAG and agentic analysis workflows remain to be implemented in subsequent stages.
+Stage 1B implements incremental synchronization for GitHub issues, enabling differential updates and content hashing to prepare for efficient downstream RAG embedding and vector indexing.
+
+## Issue Ingestion & Incremental Synchronization
+
+### Why Incremental Synchronization Matters for RAG
+
+In later stages, historical issues will be embedded using an embedding model and stored in a vector database (`pgvector`) for similarity search. Embedding large volumes of text is computationally expensive and introduces unnecessary latency if repeated unconditionally.
+
+Incremental synchronization solves this by:
+- Generating a deterministic SHA-256 content hash over semantic text fields (`title` and `body`).
+- Comparing newly fetched issues against `data/sync_state.json`.
+- Classifying each issue as `NEW`, `CHANGED`, or `UNCHANGED`.
+- Ensuring only new or genuinely modified issues are slated for embedding/re-indexing, while metadata-only GitHub updates (such as label or timestamp changes) do not trigger redundant semantic reprocessing.
+
+### Generated Local Files
+
+Runtime files generated in `data/` are excluded from version control via `.gitignore`:
+- `data/issues.json`: The local dataset containing normalized GitHub issues (deduplicated by issue ID and ordered deterministically by issue number).
+- `data/sync_state.json`: Synchronization metadata tracking repository name, `last_sync_time`, and a dictionary of synchronized issues with their latest `updated_at` timestamps and `content_hash` digests.
+
+### Running Issue Collection & Synchronization
+
+Ensure your virtual environment is active and `GITHUB_TOKEN` is exported in your environment:
+
+1. **Initial Issue Collection (Stage 1A)**:
+   ```bash
+   python -m ingestion.issue_collector
+   ```
+   Inspect available options:
+   ```bash
+   python -m ingestion.issue_collector --help
+   ```
+
+2. **Incremental Issue Synchronization (Stage 1B)**:
+   ```bash
+   python -m ingestion.synchronizer
+   ```
+   Inspect available options:
+   ```bash
+   python -m ingestion.synchronizer --help
+   ```
