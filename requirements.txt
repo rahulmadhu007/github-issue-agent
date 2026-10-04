@@ -1,0 +1,2 @@
+# Intelligent GitHub Issue Refinement & Duplicate Detection System
+# Dependencies will be added incrementally as features are implemented and justified.
